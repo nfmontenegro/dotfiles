@@ -28,7 +28,8 @@ window:
     y: 5
 
   decorations: buttonless
-  startup_mode: Maximized
+  dynamic_padding: true
+  startup_mode: Windowed
 
 # The FreeType rasterizer needs to know the device DPI for best results
 # (changes require restart)
@@ -37,36 +38,64 @@ dpi:
   y: 128.0
 
 # When true, bold text is drawn using the bright variant of colors.
-draw_bold_text_with_bright_colors: false
+draw_bold_text_with_bright_colors: true
 
-# Font configuration (changes require restart)
+# Font configuration
 font:
-  # The normal (roman) font face to use.
-  #normal:
-    #family: JetBrains Mono
-    # Style can be specified to pick a specific face.
-    # style: Regular
+  # Normal (roman) font face
+  normal:
+    # Font family
+    #
+    # Default:
+    #   - (macOS) Menlo
+    #   - (Linux/BSD) monospace
+    #   - (Windows) Consolas
+    #family: monospace
 
-  # The bold font face
-  #bold:
-    #family: JetBrains Mono
-    # Style can be specified to pick a specific face.
-    # style: Bold
+    # The `style` can be specified to pick a specific face.
+    style: Regular
 
-  # The italic font face
+  # Bold font face
+  bold:
+    # Font family
+    #
+    # If the bold family is not specified, it will fall back to the
+    # value specified for the normal font.
+    #family: monospace
+
+    # The `style` can be specified to pick a specific face.
+    style: Regular
+
+  # Italic font face
   #italic:
-    #family: JetBrains Mono
-    # Style can be specified to pick a specific face.
-    # style: Italic
+  # Font family
+  #
+  # If the italic family is not specified, it will fall back to the
+  # value specified for the normal font.
+  #family: monospace
 
-  # Point size of the font
+  # The `style` can be specified to pick a specific face.
+  #style: Italic
+
+  # Bold italic font face
+  #bold_italic:
+  # Font family
+  #
+  # If the bold italic family is not specified, it will fall back to the
+  # value specified for the normal font.
+  #family: monospace
+
+  # The `style` can be specified to pick a specific face.
+  #style: Bold Italic
+
+  # Point size
   size: 13.0
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
   offset:
     x: 0
-    y: 0
+    y: 2
 
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom. Increase the x offset to move the glyph to
@@ -78,7 +107,7 @@ font:
   # OS X only: use thin stroke font rendering. Thin strokes are suitable
   # for retina displays, but for non-retina you probably want this set to
   # false.
-  use_thin_strokes: false
+  use_thin_strokes: true
 
 # Should display the render timer
 debug.render_timer: false
@@ -87,34 +116,34 @@ debug.render_timer: false
 colors:
   # Default colors
   primary:
-    background: '0x002635'
-    foreground: '0xe6e6dc'
+    background: "0x002635"
+    foreground: "0xe6e6dc"
 
   # Normal colors
   normal:
-    black:   '0x00384d'
-    red:     '0xc43061'
-    green:   '0x7fc06e'
-    yellow:  '0xf08e48'
-    blue:    '0x1c8db2'
-    magenta: '0xc694ff'
-    cyan:    '0x00cccc'
-    white:   '0x77929e'
+    black: "0x00384d"
+    red: "0xc43061"
+    green: "0x7fc06e"
+    yellow: "0xf08e48"
+    blue: "0x1c8db2"
+    magenta: "0xc694ff"
+    cyan: "0x00cccc"
+    white: "0x77929e"
 
   # Bright colors
   bright:
-    black:   '0x517f8d'
-    red:     '0xff5a67'
-    green:   '0x9cf087'
-    yellow:  '0xffcc1b'
-    blue:    '0x7eb2dd'
-    magenta: '0xfb94ff'
-    cyan:    '0x00ffff'
-    white:   '0xb7cff9'
+    black: "0x517f8d"
+    red: "0xff5a67"
+    green: "0x9cf087"
+    yellow: "0xffcc1b"
+    blue: "0x7eb2dd"
+    magenta: "0xfb94ff"
+    cyan: "0x00ffff"
+    white: "0xb7cff9"
 
   cursor:
     text: "0x002635"
-    cursor: "0xffcc1b"
+    cursor: "0xe6e6dc"
 
 # Visual Bell
 #
@@ -174,69 +203,6 @@ colors:
 #   `command` must be a map containing a `program` string, and `args` array of
 #     strings. For example:
 #     - { ... , command: { program: "alacritty", args: ["-e", "vttest"] } }
-key_bindings:
-  - { key: V,        mods: Command, action: Paste                        }
-  - { key: C,        mods: Command, action: Copy                         }
-  - { key: Q,        mods: Command, action: Quit                         }
-  - { key: W,        mods: Command, action: Quit                         }
-  - { key: N,        mods: Command,            action: SpawnNewInstance  }
-  - { key: Home,                    chars: "\x1bOH",   mode: AppCursor   }
-  - { key: Home,                    chars: "\x1b[1~",  mode: ~AppCursor  }
-  - { key: End,                     chars: "\x1bOF",   mode: AppCursor   }
-  - { key: End,                     chars: "\x1b[4~",  mode: ~AppCursor  }
-  - { key: PageUp,   mods: Shift,   chars: "\x1b[5;2~"                   }
-  - { key: PageUp,   mods: Control, chars: "\x1b[5;5~"                   }
-  - { key: PageUp,                  chars: "\x1b[5~"                     }
-  - { key: PageDown, mods: Shift,   chars: "\x1b[6;2~"                   }
-  - { key: PageDown, mods: Control, chars: "\x1b[6;5~"                   }
-  - { key: PageDown,                chars: "\x1b[6~"                     }
-  - { key: Left,     mods: Shift,   chars: "\x1b[1;2D"                   }
-  - { key: Left,     mods: Control, chars: "\x1b[1;5D"                   }
-  - { key: Left,     mods: Alt,     chars: "\x1b[1;3D"                   }
-  - { key: Left,                    chars: "\x1b[D",   mode: ~AppCursor  }
-  - { key: Left,                    chars: "\x1bOD",   mode: AppCursor   }
-  - { key: Right,    mods: Shift,   chars: "\x1b[1;2C"                   }
-  - { key: Right,    mods: Control, chars: "\x1b[1;5C"                   }
-  - { key: Right,    mods: Alt,     chars: "\x1b[1;3C"                   }
-  - { key: Right,                   chars: "\x1b[C",   mode: ~AppCursor  }
-  - { key: Right,                   chars: "\x1bOC",   mode: AppCursor   }
-  - { key: Up,       mods: Shift,   chars: "\x1b[1;2A"                   }
-  - { key: Up,       mods: Control, chars: "\x1b[1;5A"                   }
-  - { key: Up,       mods: Alt,     chars: "\x1b[1;3A"                   }
-  - { key: Up,                      chars: "\x1b[A",   mode: ~AppCursor  }
-  - { key: Up,                      chars: "\x1bOA",   mode: AppCursor   }
-  - { key: Down,     mods: Shift,   chars: "\x1b[1;2B"                   }
-  - { key: Down,     mods: Control, chars: "\x1b[1;5B"                   }
-  - { key: Down,     mods: Alt,     chars: "\x1b[1;3B"                   }
-  - { key: Down,                    chars: "\x1b[B",   mode: ~AppCursor  }
-  - { key: Down,                    chars: "\x1bOB",   mode: AppCursor   }
-  - { key: Tab,      mods: Shift,   chars: "\x1b[Z"                      }
-  - { key: F1,                      chars: "\x1bOP"                      }
-  - { key: F2,                      chars: "\x1bOQ"                      }
-  - { key: F3,                      chars: "\x1bOR"                      }
-  - { key: F4,                      chars: "\x1bOS"                      }
-  - { key: F5,                      chars: "\x1b[15~"                    }
-  - { key: F6,                      chars: "\x1b[17~"                    }
-  - { key: F7,                      chars: "\x1b[18~"                    }
-  - { key: F8,                      chars: "\x1b[19~"                    }
-  - { key: F9,                      chars: "\x1b[20~"                    }
-  - { key: F10,                     chars: "\x1b[21~"                    }
-  - { key: F11,                     chars: "\x1b[23~"                    }
-  - { key: F12,                     chars: "\x1b[24~"                    }
-  - { key: Back,                    chars: "\x7f"                        }
-  - { key: Back,     mods: Alt,     chars: "\x1b\x7f"                    }
-  - { key: Insert,                  chars: "\x1b[2~"                     }
-  - { key: Delete,                  chars: "\x1b[3~"                     }
-
-  # shortcuts for tmux. the leader key is control-b (0x02)
-  - { key: W,        mods: Command,       chars: "\x02&"                 }  # close tab (kill)
-  - { key: T,        mods: Command,       chars: "\x02c"                 }  # new tab
-  - { key: RBracket, mods: Command|Shift, chars: "\x02n"                 }  # select next tab
-  - { key: LBracket, mods: Command|Shift, chars: "\x02p"                 }  # select previous tab
-  - { key: RBracket, mods: Command,       chars: "\x02o"                 }  # select next pane
-  - { key: LBracket, mods: Command,       chars: "\x02;"                 }  # select last (previously used) pane
-  - { key: F,        mods: Command,       chars: "\x02/"                 }  # search (upwards) (see tmux.conf)
-
 # Mouse bindings
 #
 # Currently doesn't support modifiers. Both the `mouse` and `action` fields must
@@ -260,8 +226,9 @@ mouse:
   triple_click: { threshold: 300 }
 
 selection:
-  semantic_escape_chars: ",│`|:\"' ()[]{}<>"
+  semantic_escape_chars: ',│`|:"'' ()[]{}<>'
 
+live_config_reload: true
 # Shell
 #
 # You can set shell.program to the path of your favorite shell, e.g. /bin/fish.
