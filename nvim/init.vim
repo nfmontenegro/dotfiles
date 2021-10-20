@@ -121,7 +121,7 @@ let g:tokyonight_cursor='blue'
 let g:tokyonight_menu_selection_background='blue'
 let g:tokyonight_enable_italic=1
 
-colorscheme gruvbox
+colorscheme gruvbuddy
 
 " Find files using Telescope command-line sugar.
 nmap <C-p> :Telescope find_files<CR>
