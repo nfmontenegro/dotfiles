@@ -51,19 +51,21 @@ setw -g aggressive-resize on
 # reload config file (change file location to your the tmux.conf you want to use)
 bind r source-file ~/.tmux.conf
 
+source-file "tmux-night-owl.conf"
+
 #set -g status-style fg=white,bg=default # setting this default to make it transparent (https://stackoverflow.com/questions/22303820/tmux-transparent-status-bar)
-set-option -g status on
+#set-option -g status on
 ## Theme settings mixed with colors (unfortunately, but there is no cleaner way)
-set-option -g status-justify left
-set-option -g status-left-style none
-set-option -g status-left-length 100
+#set-option -g status-justify left
+#set-option -g status-left-style none
+#set-option -g status-left-length 100
 #set-option -g status-right-style none
-set-option -g status-right-length 100
-set-window-option -g window-status-separator ""
-set -g status-style fg=white,bg=colour236
+#set-option -g status-right-length 100
+#set-window-option -g window-status-separator ""
+#set -g status-style fg=white,bg=colour236
 
-set-option -g status-left "#[bg=colour245,fg=colour234] #S "
-set-option -g status-right "#[bg=colour237,fg=colour246] %H:%M #[bg=colour239,fg=colour245] %d-%b-%y #[bg=colour210,fg=colour234] #h "
+#set-option -g status-left "#[bg=colour245,fg=colour234] #S "
+#set-option -g status-right "#[bg=colour237,fg=colour246] %H:%M #[bg=colour239,fg=colour245] %d-%b-%y #[bg=colour210,fg=colour234] #h "
 
-set-window-option -g window-status-current-format "#[bg=colour208,fg=colour234,bold] #W#{?window_zoomed_flag,*Z,} "
-set-window-option -g window-status-format "#[bg=colour240,fg=colour246] #I:#W "
+#set-window-option -g window-status-current-format "#[bg=colour208,fg=colour234,bold] #W#{?window_zoomed_flag,*Z,} "
+#set-window-option -g window-status-format "#[bg=colour240,fg=colour246] #I:#W "
