@@ -1,4 +1,4 @@
-:call plug#begin('~/.vim/plugged')
+call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
