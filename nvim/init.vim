@@ -1,4 +1,4 @@
-call plug#begin('~/.vim/plugged')
+:call plug#begin('~/.vim/plugged')
 
 Plug 'scrooloose/nerdtree'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
@@ -13,12 +13,9 @@ Plug 'tpope/vim-surround'
 Plug 'psliwka/vim-smoothie'
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'
-Plug 'ghifarit53/tokyonight-vim'
 Plug 'dense-analysis/ale'
 Plug 'windwp/nvim-autopairs'
-Plug 'tjdevries/colorbuddy.vim'
-Plug 'tjdevries/gruvbuddy.nvim'
-Plug 'norcalli/nvim-colorizer.lua'
+Plug 'haishanh/night-owl.vim'
 
 " LSPConfig
 Plug 'neovim/nvim-lspconfig'
@@ -86,12 +83,13 @@ set termguicolors
 set scrolloff=8
 set noshowmode
 set signcolumn=yes
+set cursorline
 set isfname+=@-@
 " set ls=0
 set completeopt=menuone,noselect
 set list
 set showbreak=↪\
-set listchars=tab:→\ ,eol:¬,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 
 " Give more space for displaying messages.
 set cmdheight=1
@@ -108,20 +106,15 @@ endif
 let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark='medium'
 let g:gruvbox_invert_selection='0'
-let g:airline_theme='gruvbox'
+let g:airline_theme='night_owl'
 
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%;lum]"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%;lum]"
 endif
 
-" Tokyonight theme
-let g:tokyonight_style = 'storm' " available: night, storm
-let g:tokyonight_cursor='blue'
-let g:tokyonight_menu_selection_background='blue'
-let g:tokyonight_enable_italic=1
+colorscheme night-owl
 
-colorscheme gruvbuddy
 
 " Find files using Telescope command-line sugar.
 nmap <C-p> :Telescope find_files<CR>
@@ -192,6 +185,13 @@ nmap <c-m> :MaximizerToggle<cr>
 
 " linter
 let b:ale_fixers = ['prettier', 'eslint']
+
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
+
+" You can disable this option too
+" if you don't want linters to run on opening a file
+let g:ale_lint_on_enter = 0
 
 " lspconfig compe
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
