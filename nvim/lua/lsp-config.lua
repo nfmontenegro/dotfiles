@@ -1,4 +1,22 @@
 local nvim_lsp = require('lspconfig')
+require('lualine').setup({
+  options = {
+    section_separators = { left = '', right = ''},
+    component_separators = { left = '', right = ''},
+    theme = 'dracula'
+  },
+  tabline = {
+    lualine_a = {'buffers'},
+    lualine_b = {'filename'},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {'branch'},
+    lualine_z = {'tabs'}
+  },
+  extensions = {
+    'nerdtree'
+  }
+})
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
