@@ -51,7 +51,7 @@ setw -g aggressive-resize on
 # reload config file (change file location to your the tmux.conf you want to use)
 bind r source-file ~/.tmux.conf
 
-source-file "tmux-night-owl.conf"
+source-file "~/tmux-night-owl.conf"
 
 #set -g status-style fg=white,bg=default # setting this default to make it transparent (https://stackoverflow.com/questions/22303820/tmux-transparent-status-bar)
 #set-option -g status on
