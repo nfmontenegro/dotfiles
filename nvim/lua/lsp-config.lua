@@ -147,16 +147,6 @@ local on_attach = function(client, bufnr)
 
 end
 
-local servers = { 'tsserver' }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    }
-  }
-end
-
 require('telescope').setup{ defaults = { file_ignore_patterns = {"node_modules"} } }
 
 -- following options are the default
@@ -208,3 +198,4 @@ require'nvim-tree'.setup {
     }
   }
 }
+
