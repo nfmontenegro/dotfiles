@@ -9,13 +9,13 @@ Plug 'blackcauldron7/surround.nvim'
 Plug 'tpope/vim-surround'
 Plug 'psliwka/vim-smoothie'
 Plug 'puremourning/vimspector'
-Plug 'dense-analysis/ale'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'tjdevries/colorbuddy.vim'
 Plug 'tjdevries/gruvbuddy.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'sheerun/vim-polyglot'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 
 " LSP config
 Plug 'neovim/nvim-lspconfig'
@@ -128,16 +128,6 @@ let g:test#basic#start_normal = 1 " If using basic strategy
 
 " vimspector
 let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
-
-" linter
-let b:ale_fixers = ['prettier', 'eslint']
-
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_insert_leave = 0
-
-" You can disable this option too
-" if you don't want linters to run on opening a file
-let g:ale_lint_on_enter = 0
 
 nnoremap <leader>gd :lua vim.lsp.buf.definition()<CR>
 nnoremap <leader>gi :lua vim.lsp.buf.implementation()<CR>

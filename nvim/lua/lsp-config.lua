@@ -78,10 +78,22 @@ cmp.setup({
   }
 })
 
+require("null-ls").config({
+    sources = { require("null-ls").builtins.formatting.stylua }
+})
+
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-require('lspconfig')['tsserver'].setup {
-  capabilities = capabilities
-}
+
+local servers = { 'tsserver', 'null-ls' }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+end
 
 require('lualine').setup({
   options = {
@@ -146,7 +158,6 @@ for _, lsp in ipairs(servers) do
 end
 
 require('telescope').setup{ defaults = { file_ignore_patterns = {"node_modules"} } }
-
 
 -- following options are the default
 -- each of these are documented in `:help nvim-tree.OPTION_NAME`
