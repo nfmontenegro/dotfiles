@@ -1,6 +1,5 @@
 call plug#begin('~/.vim/plugged')
 
-Plug 'scrooloose/nerdtree'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'gruvbox-community/gruvbox'
@@ -15,6 +14,8 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'tjdevries/colorbuddy.vim'
 Plug 'tjdevries/gruvbuddy.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'sheerun/vim-polyglot'
 
 " LSP config
 Plug 'neovim/nvim-lspconfig'
@@ -37,25 +38,6 @@ Plug 'kyazdani42/nvim-web-devicons'
 " Initialize plugin system
 call plug#end()
 lua require("lsp-config")
-
-nmap <C-n> :NERDTreeToggle<CR>
-
-let g:NERDTreeGitStatusWithFlags = 1
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-let g:NERDTreeGitStatusNodeColorization = 1
-let g:NERDTreeShowHidden=1
-let g:NERDTreeColorMapCustom = {
-   \ "Staged"    : "#0ee375",
-   \ "Modified"  : "#d9bf91",
-   \ "Renamed"   : "#51C9FC",
-   \ "Untracked" : "#FCE77C",
-   \ "Unmerged"  : "#FC51E6",
-   \ "Dirty"     : "#FFBD61",
-   \ "Clean"     : "#87939A",
-   \ "Ignored"   : "#808080"
-   \ }
-
-let g:NERDTreeIgnore = ['^node_modules$']
 
 " buffers
 map gn :bn<cr>
@@ -161,3 +143,14 @@ nnoremap <leader>gd :lua vim.lsp.buf.definition()<CR>
 nnoremap <leader>gi :lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>gr :lua vim.lsp.buf.rename()<CR>
 nnoremap <leader>vsd :lua vim.lsp.diagnostic.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()<CR>
+
+" nvim tree
+nnoremap <C-n> :NvimTreeToggle<CR>
+nnoremap <leader>r :NvimTreeRefresh<CR>
+nnoremap <leader>n :NvimTreeFindFile<CR>
+" NvimTreeOpen, NvimTreeClose, NvimTreeFocus, NvimTreeFindFileToggle, and NvimTreeResize are also available if you need them
+
+set termguicolors " this variable must be enabled for colors to be applied properly
+
+" a list of groups can be found at `:help nvim_tree_highlight`
+highlight NvimTreeFolderIcon guibg=blue
