@@ -1,6 +1,7 @@
 local nvim_lsp = require('lspconfig')
 local cmp = require'cmp'
 local lspkind = require('lspkind')
+local null_ls = require("null-ls")
 
 require('colorbuddy').colorscheme('gruvbuddy')
 require("colorbuddy").setup()
@@ -78,9 +79,13 @@ cmp.setup({
   }
 })
 
-require("null-ls").config({
-    sources = { require("null-ls").builtins.formatting.stylua }
-})
+
+local sources = {
+    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.formatting.eslint
+}
+
+null_ls.config({ sources = sources })
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -136,16 +141,28 @@ local on_attach = function(client, bufnr)
 
 end
 
-local servers = { 'tsserver', 'null-ls' }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    flags = {
-      debounce_text_changes = 150,
-    }
-  }
-end
+
+require("lspconfig")["null-ls"].setup({
+  on_attach = on_attach,
+  capabilities = capabilities
+})
+
+require("lspconfig")["tsserver"].setup({
+    on_attach = function(client, bufnr)
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+        local ts_utils = require("nvim-lsp-ts-utils")
+        ts_utils.setup({
+            eslint_bin = "eslint_d",
+            eslint_enable_diagnostics = true,
+            eslint_enable_code_actions = true,
+            enable_formatting = true,
+            formatter = "prettier",
+        })
+        ts_utils.setup_client(client)
+        on_attach(client, bufnr)
+    end,
+})
 
 require('telescope').setup{ defaults = { file_ignore_patterns = {"node_modules"} } }
 
@@ -198,4 +215,3 @@ require'nvim-tree'.setup {
     }
   }
 }
-
