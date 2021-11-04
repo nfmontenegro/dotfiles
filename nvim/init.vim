@@ -16,6 +16,7 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+Plug 'windwp/nvim-autopairs'
 
 " LSP config
 Plug 'neovim/nvim-lspconfig'
@@ -96,6 +97,10 @@ if exists('+termguicolors')
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%;lum]"
 endif
 
+" vim tests
+let test#strategy = 'neovim'
+let g:test#neovim#start_normal = 1 " If using neovim strategy
+let g:test#basic#start_normal = 1 " If using basic strategy
 
 " Find files using Telescope command-line sugar.
 nmap <C-p> :Telescope find_files<CR>
@@ -120,11 +125,6 @@ function! InsertMapForEnter()
         return "\<CR>"
     endif
 endfunction
-
-" vim tests
-let test#strategy = 'neovim'
-let g:test#neoim#start_normal = 1 " If using neovim strategy
-let g:test#basic#start_normal = 1 " If using basic strategy
 
 " vimspector
 let g:vimspector_enable_mappings = 'VISUAL_STUDIO'

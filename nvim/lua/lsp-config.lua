@@ -1,7 +1,8 @@
-local nvim_lsp = require('lspconfig')
-local cmp = require'cmp'
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local cmp = require('cmp')
 local lspkind = require('lspkind')
 local null_ls = require("null-ls")
+local nvim_lsp = require('lspconfig')
 
 require('colorbuddy').colorscheme('gruvbuddy')
 require("colorbuddy").setup()
@@ -241,3 +242,5 @@ require'nvim-tree'.setup {
     }
   }
 }
+
+require('nvim-autopairs').setup{}
