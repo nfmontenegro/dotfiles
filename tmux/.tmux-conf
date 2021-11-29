@@ -51,7 +51,9 @@ setw -g aggressive-resize on
 # reload config file (change file location to your the tmux.conf you want to use)
 bind r source-file ~/.tmux.conf
 
-source-file "~/tmux-night-owl.conf"
+#source-file "tmux-night-owl.conf"
+
+run '~/theme/theme.tmux'
 
 #set -g status-style fg=white,bg=default # setting this default to make it transparent (https://stackoverflow.com/questions/22303820/tmux-transparent-status-bar)
 #set-option -g status on
@@ -64,7 +66,7 @@ source-file "~/tmux-night-owl.conf"
 #set-window-option -g window-status-separator ""
 #set -g status-style fg=white,bg=colour236
 
-#set-option -g status-left "#[bg=colour245,fg=colour234] #S "
+#set-option -g status-left "#[bg=633aa9,fg=f8f8f2] #S "
 #set-option -g status-right "#[bg=colour237,fg=colour246] %H:%M #[bg=colour239,fg=colour245] %d-%b-%y #[bg=colour210,fg=colour234] #h "
 
 #set-window-option -g window-status-current-format "#[bg=colour208,fg=colour234,bold] #W#{?window_zoomed_flag,*Z,} "
