@@ -7,7 +7,6 @@ Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'vim-test/vim-test'
 Plug 'blackcauldron7/surround.nvim'
 Plug 'tpope/vim-surround'
-Plug 'psliwka/vim-smoothie'
 Plug 'puremourning/vimspector'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'tjdevries/colorbuddy.vim'
@@ -16,7 +15,7 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
-Plug 'windwp/nvim-autopairs'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " LSP config
 Plug 'neovim/nvim-lspconfig'
@@ -89,7 +88,7 @@ endif
 
 " Gruvbox theme
 let g:gruvbox_italic=1
-let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_contrast_dark='medium'
 let g:gruvbox_invert_selection='0'
 
 if exists('+termguicolors')
@@ -144,3 +143,5 @@ set termguicolors " this variable must be enabled for colors to be applied prope
 
 " a list of groups can be found at `:help nvim_tree_highlight`
 highlight NvimTreeFolderIcon guibg=blue
+
+inoremap jk <ESC>

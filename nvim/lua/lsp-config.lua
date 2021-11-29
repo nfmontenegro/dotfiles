@@ -1,4 +1,3 @@
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local cmp = require('cmp')
 local lspkind = require('lspkind')
 local null_ls = require("null-ls")
@@ -242,5 +241,3 @@ require'nvim-tree'.setup {
     }
   }
 }
-
-require('nvim-autopairs').setup{}
