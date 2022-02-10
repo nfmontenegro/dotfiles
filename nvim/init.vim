@@ -2,7 +2,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'gruvbox-community/gruvbox'
 Plug 'HerringtonDarkholme/yats.vim' " TS Syntax
 Plug 'vim-test/vim-test'
 Plug 'blackcauldron7/surround.nvim'
@@ -13,9 +12,9 @@ Plug 'tjdevries/colorbuddy.vim'
 Plug 'tjdevries/gruvbuddy.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
 Plug 'kyazdani42/nvim-tree.lua'
-Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'pantharshit00/vim-prisma'
 
 " LSP config
 Plug 'neovim/nvim-lspconfig'
@@ -68,7 +67,7 @@ set scrolloff=8
 set noshowmode
 set splitright
 set signcolumn=yes
-set cursorline
+"set cursorline
 set isfname+=@-@
 " set ls=0
 set list
@@ -100,6 +99,9 @@ endif
 let test#strategy = 'neovim'
 let g:test#neovim#start_normal = 1 " If using neovim strategy
 let g:test#basic#start_normal = 1 " If using basic strategy
+
+let g:indent_blankline_disable_with_nolist = v:true
+let g:indent_blankline_enabled = v:false
 
 " Find files using Telescope command-line sugar.
 nmap <C-p> :Telescope find_files<CR>
@@ -144,4 +146,15 @@ set termguicolors " this variable must be enabled for colors to be applied prope
 " a list of groups can be found at `:help nvim_tree_highlight`
 highlight NvimTreeFolderIcon guibg=blue
 
-inoremap jk <ESC>
+" vimspector
+nnoremap <Leader>dd :call vimspector#Launch()<CR>
+nnoremap <Leader>de :call vimspector#Reset()<CR>
+nnoremap <Leader>dc :call vimspector#Continue()<CR>
+
+nnoremap <Leader>dt :call vimspector#ToggleBreakpoint()<CR>
+nnoremap <Leader>dT :call vimspector#ClearBreakpoints()<CR>
+
+nmap <Leader>dk <Plug>VimspectorRestart
+nmap <Leader>dh <Plug>VimspectorStepOut
+nmap <Leader>dl <Plug>VimspectorStepInto
+nmap <Leader>dj <Plug>VimspectorStepOver
