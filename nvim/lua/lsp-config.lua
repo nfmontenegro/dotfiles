@@ -1,12 +1,14 @@
 local cmp = require('cmp')
 local lspkind = require('lspkind')
-local null_ls = require("null-ls")
 local nvim_lsp = require('lspconfig')
+local luasnip = require("luasnip")
 
 require('colorbuddy').colorscheme('gruvbuddy')
 require("colorbuddy").setup()
 
 local Color = require('colorbuddy').Color
+local Group = require('colorbuddy').Group
+local colors = require('colorbuddy').colors
 
 Color.new('white',     '#f2e5bc')
 Color.new('red',       '#FB929E')
@@ -20,20 +22,17 @@ Color.new('purple',    '#8e6fbd')
 Color.new('violet',    '#b294bb')
 Color.new('orange',    '#de935f')
 Color.new('brown',     '#a3685a')
-
 Color.new('seagreen',  '#698b69')
 Color.new('turquoise', '#698b69')
+Color.new('background', "#2E3440")
+Color.new('fg', "#2E3440")
 
+
+Group.new('TabLine', colors.fg, colors.background)
+Group.new('TabLineFill', colors.fg, colors.background)
+Group.new('TabLineSeparator', colors.fg, colors.background)
 
 cmp.setup({
-  snippet = {
-    expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
-    end,
-  },
   formatting = {
     format = lspkind.cmp_format({with_text = false, maxwidth = 50})
   },
@@ -78,14 +77,6 @@ cmp.setup({
     native_menu = false
   }
 })
-
-
-local sources = {
-    null_ls.builtins.formatting.prettierd,
-    null_ls.builtins.formatting.eslint
-}
-
-null_ls.config({ sources = sources })
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -141,54 +132,56 @@ local on_attach = function(client, bufnr)
 
 end
 
-
-require("lspconfig")["null-ls"].setup({
+nvim_lsp.tsserver.setup {
   on_attach = on_attach,
   capabilities = capabilities
-})
+}
+nvim_lsp.diagnosticls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = {"javascript", "javascriptreact", "typescript", "typescriptreact", "css"},
+  init_options = {
+    filetypes = {
+      javascript = "eslint",
+      typescript = "eslint",
+      javascriptreact = "eslint",
+      typescriptreact = "eslint"
+    },
+    linters = {
+      eslint = {
+        sourceName = "eslint",
+        command = "./node_modules/.bin/eslint",
+        rootPatterns = {
+          ".eslintrc.json",
+          "package.json"
+        },
+        debounce = 100,
+        args = {
+          "--cache",
+          "--stdin",
+          "--stdin-filename",
+          "%filepath",
+          "--format",
+          "json"
+        },
+        parseJson = {
+          errorsRoot = "[0].messages",
+          line = "line",
+          column = "column",
+          endLine = "endLine",
+          endColumn = "endColumn",
+          message = "${message} [${ruleId}]",
+          security = "severity"
+        },
+        securities = {
+          [2] = "error",
+          [1] = "warning"
+        }
+      }
+    }
+  }
+}
 
-require("lspconfig")["tsserver"].setup({
-    on_attach = function(client, bufnr)
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
-        local ts_utils = require("nvim-lsp-ts-utils")
-        ts_utils.setup({
-            debug = false,
-            disable_commands = false,
-            enable_import_on_completion = true,
-            import_on_completion_timeout = 5000,
-
-            -- eslint
-            eslint_enable_code_actions = true,
-            eslint_bin = "eslint",
-            eslint_args = {"-f", "json", "--stdin", "--stdin-filename", "$FILENAME"},
-            eslint_enable_disable_comments = true,
-
-	          -- experimental settings!
-            -- eslint diagnostics
-            eslint_enable_diagnostics = true,
-            eslint_diagnostics_debounce = 250,
-
-            -- formatting
-            enable_formatting = true,
-            formatter = "prettier",
-            formatter_args = {"--stdin-filepath", "$FILENAME"},
-            format_on_save = true,
-            no_save_after_format = false,
-
-            -- parentheses completion
-            complete_parens = false,
-            signature_help_in_parens = true,
-
-            -- update imports on file move
-            update_imports_on_move = false,
-            require_confirmation_on_move = false,
-            watch_dir = "/src",
-        })
-        ts_utils.setup_client(client)
-        on_attach(client, bufnr)
-    end,
-})
 
 require('telescope').setup{ defaults = { file_ignore_patterns = {"node_modules"} } }
 
@@ -227,7 +220,8 @@ require'nvim-tree'.setup {
   },
   filters = {
     dotfiles = false,
-    custom = {}
+    custom = {
+    }
   },
   view = {
     width = 30,
