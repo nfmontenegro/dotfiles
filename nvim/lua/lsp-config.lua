@@ -2,6 +2,8 @@ local cmp = require('cmp')
 local lspkind = require('lspkind')
 local nvim_lsp = require('lspconfig')
 local luasnip = require("luasnip")
+local tabnine = require('cmp_tabnine.config')
+
 
 require('colorbuddy').colorscheme('gruvbuddy')
 require("colorbuddy").setup()
@@ -24,18 +26,38 @@ Color.new('orange',    '#de935f')
 Color.new('brown',     '#a3685a')
 Color.new('seagreen',  '#698b69')
 Color.new('turquoise', '#698b69')
-Color.new('background', "#2E3440")
-Color.new('fg', "#2E3440")
 
+local source_mapping = {
+	buffer = "[Buffer]",
+	nvim_lsp = "[LSP]",
+	nvim_lua = "[Lua]",
+	cmp_tabnine = "[TN]",
+	path = "[Path]",
+}
 
-Group.new('TabLine', colors.fg, colors.background)
-Group.new('TabLineFill', colors.fg, colors.background)
-Group.new('TabLineSeparator', colors.fg, colors.background)
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 cmp.setup({
+  snippet = {
+		expand = function(args)
+			require("luasnip").lsp_expand(args.body)
+		end,
+	},
   formatting = {
-    format = lspkind.cmp_format({with_text = false, maxwidth = 50})
-  },
+        format = function(entry, vim_item)
+            vim_item.kind = lspkind.presets.default[vim_item.kind]
+            local menu = source_mapping[entry.source.name]
+            if entry.source.name == 'cmp_tabnine' then
+                if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+                    menu = entry.completion_item.data.detail .. ' ' .. menu
+                end
+                vim_item.kind = ''
+            end
+            vim_item.menu = menu
+            return vim_item
+        end
+    },
   completion = {
     completeopt = 'menu,menuone,noinsert',
   },
@@ -72,19 +94,40 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'vsnip' }, -- For vsnip users.
     { name = 'buffer' },
+    { name = 'cmp_tabnine' }
   }),
   experimental = {
     native_menu = false
   }
 })
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+tabnine:setup({
+	max_lines = 1000;
+	max_num_results = 20;
+	sort = true;
+	run_on_every_keystroke = true;
+	snippet_placeholder = '..';
+	ignored_file_types = { -- default is not to ignore
+		-- uncomment to ignore in lua:
+		-- lua = true
+	};
+})
 
 require('lualine').setup({
   options = {
     section_separators = { left = '', right = ''},
     component_separators = { left = '', right = ''},
-    theme = 'dracula'
+    theme = 'dracula',
+    icons_enabled = true
+  },
+  extensions = {'quickfix', 'fugitive'},
+    sections = {
+      lualine_a = { { 'mode', upper = true } },
+      lualine_b = { { 'branch', icon = '' }, 'diff' },
+      lualine_c = { { 'filename', file_status = true, path = 1 } },
+      lualine_x = { { 'diagnostics', sources = { 'nvim_diagnostic' } },'encoding', 'fileformat', 'filetype' },
+      lualine_y = { 'progress' },
+      lualine_z = { 'location' },
   },
   tabline = {
     lualine_a = {'buffers'},
