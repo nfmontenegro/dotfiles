@@ -15,6 +15,8 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'pantharshit00/vim-prisma'
+Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
+Plug 'ThePrimeagen/harpoon'
 
 " LSP config
 Plug 'neovim/nvim-lspconfig'
@@ -37,6 +39,9 @@ Plug 'kyazdani42/nvim-web-devicons'
 " Initialize plugin system
 call plug#end()
 lua require("lsp-config")
+
+" key leader
+let mapleader=","
 
 " buffers
 map gn :bn<cr>
@@ -158,3 +163,16 @@ nmap <Leader>dk <Plug>VimspectorRestart
 nmap <Leader>dh <Plug>VimspectorStepOut
 nmap <Leader>dl <Plug>VimspectorStepInto
 nmap <Leader>dj <Plug>VimspectorStepOver
+
+" Harpoon
+nnoremap <Leader>hh :lua require("harpoon.ui").toggle_quick_menu()<CR>
+nnoremap <Leader>hj :lua require("harpoon.mark").add_file()<CR>
+nnoremap <Leader>hy :lua require("harpoon.ui").nav_file(1)<CR>
+nnoremap <Leader>hu :lua require("harpoon.ui").nav_file(2)<CR>
+nnoremap <Leader>hi :lua require("harpoon.ui").nav_file(3)<CR>
+nnoremap <Leader>ho :lua require("harpoon.ui").nav_file(4)<CR>
+
+" resize
+nnoremap <Leader>+ :vertical resize +5<CR>
+nnoremap <Leader>- :vertical resize -5<CR>
+nnoremap <Leader>rp :resize 100<CR>
