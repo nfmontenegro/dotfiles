@@ -17,6 +17,9 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'pantharshit00/vim-prisma'
 Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
 Plug 'ThePrimeagen/harpoon'
+Plug 'sainnhe/gruvbox-material'
+
+
 
 " LSP config
 Plug 'neovim/nvim-lspconfig'
@@ -26,6 +29,7 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'onsails/lspkind-nvim'
 
 " For vsnip users.
+Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 
@@ -85,20 +89,21 @@ set cmdheight=1
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-endif
+let g:gruvbox_material_background = 'hard'
+let g:gruvbox_material_enable_italic = 1
+let g:gruvbox_material_enable_bold = 1
+let g:gruvbox_material_cursor = 'orange'
+let g:gruvbox_material_transparent_background = 1
+let g:gruvbox_material_menu_selection_background = 'orange'
+let g:gruvbox_material_ui_contrast = 'high'
+let g:gruvbox_material_palette = 'material'
+let g:gruvbox_material_disable_italic_comment = 0
 
-" Gruvbox theme
-let g:gruvbox_italic=1
-let g:gruvbox_contrast_dark='medium'
-let g:gruvbox_invert_selection='0'
+syntax enable
+"colorscheme gruvbox-material
 
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%;lum]"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%;lum]"
-endif
+"autocmd vimenter * ++nested colorscheme gruvbox
+"autocmd VimEnter * hi Normal ctermbg=NONE guibg=NONE
 
 " vim tests
 let test#strategy = 'neovim'
@@ -167,12 +172,12 @@ nmap <Leader>dj <Plug>VimspectorStepOver
 " Harpoon
 nnoremap <Leader>hh :lua require("harpoon.ui").toggle_quick_menu()<CR>
 nnoremap <Leader>hj :lua require("harpoon.mark").add_file()<CR>
-nnoremap <Leader>hy :lua require("harpoon.ui").nav_file(1)<CR>
-nnoremap <Leader>hu :lua require("harpoon.ui").nav_file(2)<CR>
-nnoremap <Leader>hi :lua require("harpoon.ui").nav_file(3)<CR>
-nnoremap <Leader>ho :lua require("harpoon.ui").nav_file(4)<CR>
+nnoremap <Leader>ha :lua require("harpoon.ui").nav_file(1)<CR>
+nnoremap <Leader>hs :lua require("harpoon.ui").nav_file(2)<CR>
+nnoremap <Leader>hd :lua require("harpoon.ui").nav_file(3)<CR>
+nnoremap <Leader>hf :lua require("harpoon.ui").nav_file(4)<CR>
 
 " resize
-nnoremap <Leader>+ :vertical resize +5<CR>
-nnoremap <Leader>- :vertical resize -5<CR>
+nnoremap <Leader>+ :vertical resize +15<CR>
+nnoremap <Leader>- :vertical resize -15<CR>
 nnoremap <Leader>rp :resize 100<CR>
