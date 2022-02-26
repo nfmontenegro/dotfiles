@@ -1,16 +1,13 @@
+local lualine = require('lualine')
 local cmp = require('cmp')
 local lspkind = require('lspkind')
 local nvim_lsp = require('lspconfig')
-local luasnip = require("luasnip")
 local tabnine = require('cmp_tabnine.config')
-
 
 require('colorbuddy').colorscheme('gruvbuddy')
 require("colorbuddy").setup()
 
 local Color = require('colorbuddy').Color
-local Group = require('colorbuddy').Group
-local colors = require('colorbuddy').colors
 
 Color.new('white',     '#f2e5bc')
 Color.new('red',       '#FB929E')
@@ -41,8 +38,8 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 cmp.setup({
   snippet = {
 		expand = function(args)
-			require("luasnip").lsp_expand(args.body)
-		end,
+        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+    end,
 	},
   formatting = {
         format = function(entry, vim_item)
@@ -113,32 +110,6 @@ tabnine:setup({
 	};
 })
 
-require('lualine').setup({
-  options = {
-    section_separators = { left = '', right = ''},
-    component_separators = { left = '', right = ''},
-    theme = 'dracula',
-    icons_enabled = true
-  },
-  extensions = {'quickfix', 'fugitive'},
-    sections = {
-      lualine_a = { { 'mode', upper = true } },
-      lualine_b = { { 'branch', icon = '' }, 'diff' },
-      lualine_c = { { 'filename', file_status = true, path = 1 } },
-      lualine_x = { { 'diagnostics', sources = { 'nvim_diagnostic' } },'encoding', 'fileformat', 'filetype' },
-      lualine_y = { 'progress' },
-      lualine_z = { 'location' },
-  },
-  tabline = {
-    lualine_a = {'buffers'},
-    lualine_b = {},
-    lualine_c = {},
-    lualine_x = {},
-    lualine_y = {'branch'},
-    lualine_z = {'tabs'}
-  }
-})
-
 local check_back_space = function()
     local col = vim.fn.col('.') - 1
     return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') ~= nil
@@ -179,6 +150,7 @@ nvim_lsp.tsserver.setup {
   on_attach = on_attach,
   capabilities = capabilities
 }
+
 nvim_lsp.diagnosticls.setup {
   on_attach = on_attach,
   capabilities = capabilities,
@@ -225,7 +197,6 @@ nvim_lsp.diagnosticls.setup {
   }
 }
 
-
 require('telescope').setup{ defaults = { file_ignore_patterns = {"node_modules"} } }
 
 -- following options are the default
@@ -233,7 +204,7 @@ require('telescope').setup{ defaults = { file_ignore_patterns = {"node_modules"}
 require'nvim-tree'.setup {
   disable_netrw       = true,
   hijack_netrw        = true,
-  open_on_setup       = true,
+  open_on_setup       = false,
   ignore_ft_on_setup  = {},
   auto_close          = false,
   open_on_tab         = false,
@@ -278,3 +249,30 @@ require'nvim-tree'.setup {
     }
   }
 }
+
+require('lualine').setup({
+  options = {
+    icons_enabled = true,
+    theme = "gruvbox",
+    --component_separators = { " ", " " },
+    section_separators = { left = "", right = "" },
+    disabled_filetypes = {},
+  },
+  extensions = {'quickfix', 'fugitive'},
+    sections = {
+      lualine_a = { { 'mode', upper = true } },
+      lualine_b = { { 'branch', icon = '' }, 'diff' },
+      lualine_c = { { 'filename', file_status = true, path = 1 } },
+      lualine_x = { { 'diagnostics', sources = { 'nvim_diagnostic' } },'encoding', 'fileformat', 'filetype' },
+      lualine_y = { 'progress' },
+      lualine_z = { 'location' },
+  },
+  tabline = {
+    lualine_a = {'buffers'},
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {'branch'},
+    lualine_z = {'tabs'}
+  }
+})
