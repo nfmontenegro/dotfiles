@@ -208,7 +208,7 @@ require('telescope').setup {
     mappings = {
       i = {
         ['<C-u>'] = false,
-        ['<C-d>'] = false,
+        ['<C-d>'] = require('telescope.actions').delete_buffer,
       },
     },
   },
@@ -452,17 +452,20 @@ cmp.setup {
   },
 }
 
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
-
+-- Tree
 require("nvim-tree").setup()
 vim.keymap.set('n', '<C-n>', ':NvimTreeToggle<CR>')
 
+-- buffers
 vim.keymap.set('n', 'gn', ':bn<cr>')
 vim.keymap.set('n', 'gp', ':bp<cr>')
 vim.keymap.set('n', 'gk', ':bd<cr>')
 
+-- harpoon setup
 vim.keymap.set('n', ',,', ':lua require("harpoon.ui").toggle_quick_menu()<cr>')
 vim.keymap.set('n', ',.', ':lua require("harpoon.mark").add_file()<cr>')
 vim.keymap.set('n', ',l', ':lua require("harpoon.ui").nav_prev()<cr>')
 vim.keymap.set('n', ',;', ':lua require("harpoon.ui").nav_next()<cr>')
+
+-- The line beneath this is called `modeline`. See `:help modeline`
+-- vim: ts=2 sts=2 sw=2 et
