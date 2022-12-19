@@ -462,7 +462,7 @@ vim.keymap.set('n', ',;', ':lua require("harpoon.ui").nav_next()<cr>')
 
 vim.g.gruvbox_baby_telescope_theme = 1
 
-vim.g.test_neovim_start_normal = 1
-vim.g.test_preserve_screen = 1
+vim.g["test#strategy"] = "neovim"
+vim.g["test#preserve_screen"] = 1
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
